@@ -99,7 +99,7 @@ class presentacion(tk.Frame):
         imhelp = imhelp.resize((64, 64), PIL.Image.ANTIALIAS)
         photohelp = PIL.ImageTk.PhotoImage(imhelp)
 
-        self.btnayuda = tk.Button(self.parent,text="ayuda",image = photohelp)
+        self.btnayuda = tk.Button(self.parent,text="ayuda",image = photohelp, command = self.help)
         self.btnayuda.image = photohelp
         self.btnayuda.grid(row = 5, column = 0)
 
@@ -116,6 +116,7 @@ class presentacion(tk.Frame):
         self.btnsalir.image = photosalir
         tooltip_obj = tooltip.ToolTips(self.widgets, self.tooltip_text)
 
+
     def centrar(self):
         self.w = 700
         self.h = 450
@@ -124,6 +125,18 @@ class presentacion(tk.Frame):
         x = (self.sw - self.w) / 2
         y = (self.sh - self.h) / 2
         self.parent.geometry('%dx%d+%d+%d' %(self.w, self.h, x, y))
+
+    def help(self):
+        top = tk.Toplevel()
+        top.title("Sobre la malla validadora")
+        top.geometry("300x150+120+120")
+
+        msg = tk.Message(top, text="MALLA VALIDADORA PARA FACILITAR EL REPORTE DE INFORMACION DE ARTRITIS "
+                                   "DE ACUERDO CON LO DISPUESTO EN LA RESOLUCION 1393 DE 2016")
+        msg.pack()
+
+        button = tk.Button(top, text="Cerrar", command=top.destroy)
+        button.pack()
 
 
     def loadArchivo(self):

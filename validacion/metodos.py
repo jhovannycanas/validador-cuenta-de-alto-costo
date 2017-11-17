@@ -4,12 +4,17 @@ import re
 import datetime
 
 SOLO_CARACTERES = re.compile("^[A-Za-z 0-9_-]*$")
-dict_mensajes = {1: "El texto ingresado contiene caracteres especiales: %s en la columna %s en la fila %s",
+SOLO_TEXTO= re.compile("^[A-Za-z -]*$")
+dict_mensajes = {1: "El texto ingresado contiene caracteres especiales: %s en la columna %s en la fila %s;"
+                    "tambien puede deberse a que ingreso un numero con comas o puntos",
                  2: "El texto ingresado no corresponde a un numero: %s en la columna %s en la fila %s",
                  3: "El texto ingresado no corresponde a una fecha valida que cumpla el siguiente formato:"
                     "(AAAA-MM-DD) o la fecha ingresada es menor a 1900: %s en la columna %s en la fila %s",
-                 4: "El valor ingresado no es una respuesta valida: %s en la columna %s en la fila %s",
-                 5:"El valor ingresado no corresponde a un segundo nombre: %s en la columna %s en la fila %s",
+                 4: "El valor ingresado no es una respuesta valida: %s en la columna %s en la fila %s; "
+                    "por favor verificar el dato ingresado que si corresponda al esperado",
+                 5:"El valor ingresado no corresponde a un segundo nombre: %s en la columna %s en la fila %s;"
+                   "por favor verificar si el valor ingresado corresponde al esperado, o si contiene mas de dos "
+                   "espacios en blanco",
                  6: "El valor ingresado no corresponde a una fecha validad o una fecha admisible: %s en la columna %s en la fila %s",
                  7: "El campo no puede ser nulo o vacio: %s en la columna %s en la fila %s",
                  8:"La ubicación del nombre  de la columna: %s , no corresponde al orden esperado, "
@@ -30,6 +35,8 @@ def verificarSoloCaracteres(texto):
         return (True, None)
     return SOLO_CARACTERES.match(texto) is not None
 
+def validarsolotexto(texto):
+    return SOLO_TEXTO.match(texto) is not None
 
 def validarSoloNumeros(numero):
     try:
@@ -77,6 +84,8 @@ def validarEspacio(nombre):
 def validarSegundoNombre(nombre):
     if nombre == "NONE":
         return True
+    if not validarsolotexto(nombre):
+        return False
     return validarEspacio(nombre)
 
 
@@ -104,10 +113,13 @@ def validarSegundoApellido(apellido):
     return validarPrimerNombre(apellido)
 
 def validarRangoSinDato(intervaloInferior, intervaloSuperior,sinDato, numero):
-    if validarSoloNumeros(sinDato) and sinDato == 300:
+    if not validarSoloNumeros(numero):
+        return False
+    if numero == sinDato == 300:
         return True
-    if validarSoloNumeros(numero) and validarEntero(numero):
-        return intervaloInferior <= numero <= intervaloSuperior
+    if not validarEntero(numero):
+        return False
+    return intervaloInferior <= numero <= intervaloSuperior
 
 def validar_SindecimalesSinComas(numero):
     if isinstance(numero, float):
