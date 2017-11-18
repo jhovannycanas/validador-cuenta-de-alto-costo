@@ -11,7 +11,9 @@
 # 															 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-import math, tkinter as tk, tkinter.ttk as ttk, tkinter.font as tkFont
+import ttk
+import tkFont
+import math, Tkinter as tk
 
 class ToolTips :
 	"""This class will display a tooltip around a widget that is being hovered over.

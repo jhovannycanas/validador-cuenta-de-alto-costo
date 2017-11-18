@@ -11,7 +11,9 @@ import PIL.ImageTk
 import os
 from validacion import constansts
 import datetime
-import traceback, tkinter as tk, tkinter.ttk as ttk, tkinter.font as tkFont
+import ttk
+import tkFont
+import traceback, Tkinter as tk
 import pandas as pd
 import tooltip
 
@@ -23,8 +25,8 @@ class presentacion(tk.Frame):
     def __init__(self, parent= None, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-        parent.minsize(width=666, height=450)
-        parent.maxsize(width=700, height=500)
+        parent.minsize(width=750, height=450)
+        parent.maxsize(width=900, height=500)
         self.archivo = None
         self.init()
         self.centrar()
@@ -118,8 +120,8 @@ class presentacion(tk.Frame):
 
 
     def centrar(self):
-        self.w = 700
-        self.h = 450
+        self.w = 650
+        self.h = 600
         self.sw = self.parent.winfo_screenwidth()
         self.sh = self.parent.winfo_screenheight()
         x = (self.sw - self.w) / 2
