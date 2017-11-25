@@ -106,7 +106,10 @@ class presentacion(tk.Frame):
         self.btnayuda.image = photohelp
         self.btnayuda.grid(row = 5, column = 0)
 
-        self.bterrores = tk.Button(self.parent,text="Generar salida errores",
+        self.widgets.append(self.btnayuda)
+        self.tooltip_text.append("Sobre la aplicación")
+
+        self.bterrores = tk.Button(self.parent,text="Exportar errores a Excel",
                                    command = self.generararchivoerrores,state=tk.DISABLED)
         self.bterrores.grid(row = 5,  column = 1,padx=5, pady=5)
 
@@ -117,6 +120,10 @@ class presentacion(tk.Frame):
         self.btnsalir =  tk.Button(self.parent, text = "salir",image = photosalir, command= self.quit)
         self.btnsalir.grid(row= 5, column = 3,padx=(0,0), pady=(0,0),sticky=tk.E + tk.W + tk.S + tk.N)
         self.btnsalir.image = photosalir
+
+        self.widgets.append(self.btnsalir)
+        self.tooltip_text.append("Salir de la aplicación")
+
         tooltip_obj = ToolTips(self.widgets, self.tooltip_text)
 
 
@@ -205,6 +212,8 @@ class presentacion(tk.Frame):
             self.datos.convertirafechas()
             self.btnvalidar['state'] = 'normal'
             self.mostrarAviso("El archivo se cargo exitosamente")
+            print(self.datos.data.shape)
+            self.area.insert(tk.END, "Se cargaron de forma exitosa %s registros o filas y %s columnas" % (self.datos.data.shape))
 
     def validaridentificacion(self):
         if self.datos is not None:
@@ -395,6 +404,7 @@ class presentacion(tk.Frame):
             nombrearchivo = "%s_%s_ARTRITIS.txt" %(fechareporte.strftime('%Y-%m-%d'), "colombia")
             rutasalida = os.path.dirname(self.nombre)
             rutaexporta= os.path.join(rutasalida,nombrearchivo)
+            self.datos.removerespacios_convertmayuscula()
             self.datos.data.to_csv(rutaexporta, header=None, index=None, sep='\t', line_terminator='\r', mode='a')
             self.mostrarAviso("Se ha generado de forma exitosa el archivo de reporte")
             self.area.insert(tk.END, "El archivo resultado se encuentra en la ubicación: " + rutaexporta)

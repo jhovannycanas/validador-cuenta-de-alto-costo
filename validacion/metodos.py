@@ -22,6 +22,7 @@ dict_mensajes = {1: "El texto ingresado contiene caracteres especiales: %s en la
 
 fechas_convertir = [9, 15, 16, 17, 18, 39, 42, 44, 49, 93, 97, 106, 141, 144,146]
 fechas_por_defecto = [16,17, 18,39,42, 44,49,93,97,106,141, 144,146]
+mayusculas_noespacio =[3,4,5,6]
 
 def validarEntero(numero):
         return not isinstance(numero, float)
@@ -38,6 +39,8 @@ def verificarSoloCaracteres(texto):
     return SOLO_CARACTERES.match(texto) is not None
 
 def validarsolotexto(texto):
+    if validarSoloNumeros(texto):
+        return False
     return SOLO_TEXTO.match(texto) is not None
 
 def validarSoloNumeros(numero):
@@ -136,11 +139,11 @@ def validarFechaPorDefecto(fecha, fechasindato):
 def validarInconsistenciaColumna(df, columna):
     return False in df[columna].values
 
-def generarMensajeInconsistencia(df, dfData, columna, tipoerror):
+def generarMensajeInconsistencia(df, dfData, columna, tipoerror, tipo):
     mensajes = []
     for i, row in df[columna].iteritems():
         if row == False:
-            mensajes.append(dict_mensajes.get(tipoerror) % (dfData.get_value(i, columna),columna, i ))
+            mensajes.append(dict_mensajes.get(tipoerror) % (dfData.get_value(i, columna),columna, i + tipo))
     return mensajes
 
 
