@@ -33,6 +33,8 @@ def verificarSoloCaracteres(texto):
         return False
     if isinstance(texto, datetime.datetime):
         return (True, None)
+    if isinstance(texto, long):
+        return True
     return SOLO_CARACTERES.match(texto) is not None
 
 def validarsolotexto(texto):

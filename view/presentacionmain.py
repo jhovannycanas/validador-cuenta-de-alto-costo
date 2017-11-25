@@ -2,18 +2,21 @@
 # -*- coding: utf-8 -*-
 
 import Tkinter as tk
+import datetime
+import os
+import sys
+import tkFont
 import tkMessageBox
-import ttk
-from tkFileDialog import askopenfilename, asksaveasfile,asksaveasfilename
-from archivo import gestionfile
+from tkFileDialog import askopenfilename, asksaveasfilename
+
 import PIL.Image
 import PIL.ImageTk
-import os
+
+from Tooltip.tooltip import ToolTips
+from archivo import gestionfile
 from validacion import constansts
-import datetime
-import traceback, tkinter as tk, tkinter.ttk as ttk, tkinter.font as tkFont
-import pandas as pd
-import tooltip
+
+sys.path.append('view/')
 
 #https://stackoverflow.com/questions/40879085/open-excel-file-in-tkinter-and-plot-graphs
 #https://stackoverflow.com/questions/40295587/how-can-i-use-tkinter-to-prompt-users-to-save-a-dataframe-to-an-excel-file
@@ -23,8 +26,8 @@ class presentacion(tk.Frame):
     def __init__(self, parent= None, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-        parent.minsize(width=666, height=450)
-        parent.maxsize(width=700, height=500)
+        parent.minsize(width=750, height=450)
+        parent.maxsize(width=900, height=500)
         self.archivo = None
         self.init()
         self.centrar()
@@ -114,12 +117,12 @@ class presentacion(tk.Frame):
         self.btnsalir =  tk.Button(self.parent, text = "salir",image = photosalir, command= self.quit)
         self.btnsalir.grid(row= 5, column = 3,padx=(0,0), pady=(0,0),sticky=tk.E + tk.W + tk.S + tk.N)
         self.btnsalir.image = photosalir
-        tooltip_obj = tooltip.ToolTips(self.widgets, self.tooltip_text)
+        tooltip_obj = ToolTips(self.widgets, self.tooltip_text)
 
 
     def centrar(self):
-        self.w = 700
-        self.h = 450
+        self.w = 650
+        self.h = 600
         self.sw = self.parent.winfo_screenwidth()
         self.sh = self.parent.winfo_screenheight()
         x = (self.sw - self.w) / 2
