@@ -114,10 +114,10 @@ class filevalidation():
 
     def validar_EPS(self):
         self.dfvalidacion[self.dfvalidacion.columns[0]] = self.data[self.data.columns[0]].apply(
-            lambda x: metodos.verificarSoloCaracteres(x))
+            lambda x: metodos.validarValorRespuesta(x, valores.dict_EAPB))
 
         self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[0],
-                                 constansts.ERROR_CARACTERES_ESPECIALES, self.tipo)
+                                 constansts.ERROR_VALORNOPERMITIDO, self.tipo)
 
     def validar_Regimen(self):
         self.dfvalidacion[self.dfvalidacion.columns[1]] = self.data[self.data.columns[1]].apply(
