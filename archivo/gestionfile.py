@@ -93,6 +93,7 @@ class filevalidation():
         self.dfvalidacion = self.data.applymap(lambda x: metodos.verificarSoloCaracteres(x))
         for columna in self.dfvalidacion.columns:
             if self._columnas[12] == columna:
+                self.dfvalidacion[self.dfvalidacion.columns[12]] = True
                 continue
             self.crearInformeErrores(self.dfvalidacion, self.data, columna,
                                      constansts.ERROR_CARACTERES_ESPECIALES, self.tipo)
@@ -102,13 +103,15 @@ class filevalidation():
                 self.data[self.data.columns[columna]] = self.data[self.data.columns[columna]].str.strip()
                 self.data[self.data.columns[columna]] = self.data[self.data.columns[columna]].str.upper()
 
+    def obtenerEAPB(self):
+        return self.data[self.dfvalidacion.columns[0]].iloc[0]
+
 
 #se cambia dfvalidacion to self.data
     def validarfechas(self):
         for fecha in metodos.fechas_convertir:
             self.dfvalidacion[self.dfvalidacion.columns[fecha]] = self.data[self.data.columns[fecha]].apply(
             lambda x: metodos.validarFormatoFecha(x))
-
             self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[fecha],
                                      constansts.ERROR_FORMATO_FECHA, self.tipo)
 
