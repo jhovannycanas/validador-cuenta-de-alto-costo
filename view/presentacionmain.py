@@ -186,7 +186,12 @@ class presentacion(tk.Frame):
                 self.mostrarAlertaCargaArchivo("El archivo que intenta validar presenta varias inconsistencias"
                                                ", por favor verificar segun el reporte en la consola.")
         if self.secuencia:
-            if not (self.datos.validarCamposNulos() and self.datos.validarFiltroTexto()):
+            if not (self.datos.validarCamposNulos()):
+                self.mostrarAlertaCargaArchivo("El archivo que intenta validar presenta varias inconsistencias"
+                                               ", por favor verificar segun el reporte en la consola.")
+
+        if self.secuencia:
+            if (self.datos.validarFiltroTexto()):
                 self.mostrarAlertaCargaArchivo("El archivo que intenta validar presenta varias inconsistencias"
                                                ", por favor verificar segun el reporte en la consola.")
         if self.secuencia:
@@ -213,7 +218,7 @@ class presentacion(tk.Frame):
             self.btnvalidar['state'] = 'normal'
             self.mostrarAviso("El archivo se cargo exitosamente")
             print(self.datos.data.shape)
-            self.area.insert(tk.END, "Se cargaron de forma exitosa %s registros o filas y %s columnas" % (self.datos.data.shape))
+            self.area.insert(tk.END, "Se cargaron de forma exitosa %s registros o filas y %s columnas." % (self.datos.data.shape))
 
     def validaridentificacion(self):
         if self.datos is not None:
@@ -401,13 +406,14 @@ class presentacion(tk.Frame):
     def generararchivo(self):
         if self.datos is not None:
             fechareporte = datetime.datetime.today().date()
-            nombrearchivo = "%s_%s_ARTRITIS.txt" %(fechareporte.strftime('%Y-%m-%d'), "colombia")
+            hora = datetime.datetime.now().time().strftime('%H-%M')
+            nombrearchivo = "%s_%s_ARTRITIS_%s.txt" %(fechareporte.strftime('%Y-%m-%d'), self.datos.obtenerEAPB(),hora)
             rutasalida = os.path.dirname(self.nombre)
             rutaexporta= os.path.join(rutasalida,nombrearchivo)
             self.datos.removerespacios_convertmayuscula()
-            self.datos.data.to_csv(rutaexporta, header=None, index=None, sep='\t', line_terminator='\r', mode='a')
+            self.datos.data.to_csv(rutaexporta, header=None, index=None, sep='\t', line_terminator='\r\n', mode='a')
             self.mostrarAviso("Se ha generado de forma exitosa el archivo de reporte")
-            self.area.insert(tk.END, "El archivo resultado se encuentra en la ubicación: " + rutaexporta)
+            self.area.insert(tk.END, "El archivo resultado se encuentra ubicado en: " + rutaexporta)
             self.area.insert(tk.END, "\n")
 
 
@@ -415,7 +421,13 @@ class presentacion(tk.Frame):
         savefile = asksaveasfilename(filetypes=(("Excel files", "*.xlsx"),
                                                 ("All files", "*.*")))
         if savefile:
+            self.limpiarCampos()
+            nombrearchivo, extension = os.path.splitext(savefile)
+            if not extension in (".xls", ".xlsx"):
+                savefile = savefile + ".xlsx"
             self.datos.crearexcelerrores(savefile)
+            self.mostrarAviso("Se ha generado de forma exitosa el archivo de reporte de errores")
+            self.area.insert(tk.END, "Favor revisar el archivo de arrores generado en Excel")
 
 
     def mostrarAviso(self, mensaje):
