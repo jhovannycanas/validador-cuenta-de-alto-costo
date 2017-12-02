@@ -16,7 +16,7 @@ class filevalidation():
             self.data = pd.read_excel(file,dtype=object)
         if tipo == constansts.ARCHIVO_CSV:
             self.tipo = tipo
-            self.data = pd.read_csv(file,header = None,dtype=object , delimiter="\t")
+            self.data = pd.read_csv(file,header = None,dtype=object ,sep='\t')
             self.data.columns = valores.dict_columnasMalla.values()
         self._columnas = self.data.columns
         self.dfvalidacion = pd.DataFrame(columns=self._columnas)
@@ -50,6 +50,9 @@ class filevalidation():
         for fecha in metodos.fechas_convertir:
             self.data[self.data.columns[fecha]] = pd.to_datetime(self.data[self.data.columns[fecha]], yearfirst=True,format='%Y-%m-%d').dt.date
 
+    def convertirnumero(self):
+        for numero in metodos.numeros_convertir:
+            self.data[self.data.columns[numero]] = pd.to_numeric(self.data[self.data.columns[numero]])
 
     def validarLongitudColumnas(self):
         return len(self.data.columns) == constansts.NUMERO_COLUMNAS
@@ -114,6 +117,14 @@ class filevalidation():
             lambda x: metodos.validarFormatoFecha(x))
             self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[fecha],
                                      constansts.ERROR_FORMATO_FECHA, self.tipo)
+
+    def validarnumeros(self):
+        for numero in metodos.numeros_convertir:
+            self.dfvalidacion[self.dfvalidacion.columns[numero]] = self.data[self.data.columns[numero]].apply(
+            lambda x: metodos.validarSoloNumeros(x))
+            self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[numero],
+                                     constansts.ERROR_SOLONUMEROS, self.tipo)
+
 
     def validar_EPS(self):
         self.dfvalidacion[self.dfvalidacion.columns[0]] = self.data[self.data.columns[0]].apply(
@@ -211,7 +222,7 @@ class filevalidation():
 
     def validar_CodigoMunicipio(self):
         self.dfvalidacion[self.dfvalidacion.columns[14]] = self.data[self.data.columns[14]].apply(
-            lambda x: metodos.validarValorRespuesta(x, valores.dict_mucnicipio_dos))
+            lambda x: metodos.validarValorRespuesta(str(x), valores.dict_mucnicipio_dos))
 
         self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[14],
                                  constansts.ERROR_VALORNOPERMITIDO, self.tipo)
@@ -1094,14 +1105,14 @@ class filevalidation():
     def validar_CodigoHailitacion(self):
         print(self.data[self.data.columns[139]])
         self.dfvalidacion[self.dfvalidacion.columns[139]] = self.data[self.data.columns[139]].apply(
-            lambda x: metodos.validarValorRespuesta(x, valores.dict_IPS))
+            lambda x: metodos.validarValorRespuesta(str(x), valores.dict_IPS))
 
         self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[139],
                                  constansts.ERROR_VALORNOPERMITIDO, self.tipo)
 
     def validar_CodigoMunicipio(self):
         self.dfvalidacion[self.dfvalidacion.columns[140]] = self.data[self.data.columns[140]].apply(
-            lambda x: metodos.validarValorRespuesta(x, valores.dict_mucnicipio_dos))
+            lambda x: metodos.validarValorRespuesta(str(x), valores.dict_mucnicipio_dos))
 
         self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[140],
                                  constansts.ERROR_VALORNOPERMITIDO, self.tipo)
@@ -1173,12 +1184,20 @@ class filevalidation():
         self.dfvalidacion[self.dfvalidacion.columns[150]] = self.data[self.data.columns[150]].apply(
             lambda x: metodos.validar_SindecimalesSinComas(x))
 
-        self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[19],
+        self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[150],
                                  constansts.ERROR_SOLONUMEROS, self.tipo)
 
     def validad_costoAnualIncapacidad(self):
         self.dfvalidacion[self.dfvalidacion.columns[151]] = self.data[self.data.columns[151]].apply(
             lambda x: metodos.validar_SindecimalesSinComas(x))
 
-        self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[19],
+        self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[150],
                                  constansts.ERROR_SOLONUMEROS, self.tipo)
+
+
+    def validar_tipoidentificacionregimen(self):
+        self.dfvalidacion[self.dfvalidacion.columns[7]] = self.data.apply(
+            metodos.validartipoidentitifacion,axis=1)
+
+        self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[7],
+                                 constansts.ERROR_REGIMEN_TIPOIDENTIFICACION, self.tipo)

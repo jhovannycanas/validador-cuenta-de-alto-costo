@@ -179,6 +179,7 @@ class presentacion(tk.Frame):
                              "El numero de columnas del archivo no es igual a lo estipulado en la resolucion, por favor"
                              "verificar las columnas del archivo")
 
+        self.datos.validarnumeros()
         self.datos.validarfechas()
         if extension != ".txt":
             if not self.datos.validarSecuenciaColumnas():
@@ -215,6 +216,7 @@ class presentacion(tk.Frame):
         else:
             self.datos.ajustarfechastimestamp()
             self.datos.convertirafechas()
+            self.datos.convertirnumero()
             self.btnvalidar['state'] = 'normal'
             self.mostrarAviso("El archivo se cargo exitosamente")
             print(self.datos.data.shape)
@@ -238,6 +240,7 @@ class presentacion(tk.Frame):
             self.datos.validar_Telefono()
             self.datos.validar_CodigoMunicipio()
             self.datos.validar_FechaAfiliacionEAPB()
+            self.datos.validar_tipoidentificacionregimen()
 
     def validardiagnosticotratamiento(self):
         if self.datos is not None:
@@ -406,8 +409,8 @@ class presentacion(tk.Frame):
     def generararchivo(self):
         if self.datos is not None:
             fechareporte = datetime.datetime.today().date()
-            hora = datetime.datetime.now().time().strftime('%H-%M')
-            nombrearchivo = "%s_%s_ARTRITIS_%s.txt" %(fechareporte.strftime('%Y-%m-%d'), self.datos.obtenerEAPB(),hora)
+            #hora = datetime.datetime.now().time().strftime('%H-%M')
+            nombrearchivo = "%s_%s_ARTRITIS.txt" %(fechareporte.strftime('%Y%m%d'), self.datos.obtenerEAPB())
             rutasalida = os.path.dirname(self.nombre)
             rutaexporta= os.path.join(rutasalida,nombrearchivo)
             self.datos.removerespacios_convertmayuscula()
@@ -427,7 +430,7 @@ class presentacion(tk.Frame):
                 savefile = savefile + ".xlsx"
             self.datos.crearexcelerrores(savefile)
             self.mostrarAviso("Se ha generado de forma exitosa el archivo de reporte de errores")
-            self.area.insert(tk.END, "Favor revisar el archivo de arrores generado en Excel")
+            self.area.insert(tk.END, "Favor revisar el archivo de errores generado en Excel")
 
 
     def mostrarAviso(self, mensaje):

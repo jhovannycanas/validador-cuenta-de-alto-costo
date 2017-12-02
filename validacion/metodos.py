@@ -18,11 +18,20 @@ dict_mensajes = {1: "El texto ingresado contiene caracteres especiales: %s en la
                  6: "El valor ingresado no corresponde a una fecha validad o una fecha admisible: %s en la columna %s en la fila %s",
                  7: "El campo no puede ser nulo o vacio: %s en la columna %s en la fila %s",
                  8:"La ubicación del nombre  de la columna: %s , no corresponde al orden esperado, "
-                   "se esperaba el siguiente nombre para la columna: %s ,en su lugar"}
+                   "se esperaba el siguiente nombre para la columna: %s ,en su lugar",
+                9:"El valor ingresado no corresponde a un tipo de documento para regimen subsidiado: %s en la columna %s en la fila %s;"
+                   "por favor verificar si el valor ingresado corresponde al esperado"}
+
 
 fechas_convertir = [9, 15, 16, 17, 18, 39, 42, 44, 49, 93, 97, 106, 141, 144,146]
 fechas_por_defecto = [16,17, 18,39,42, 44,49,93,97,106,141, 144,146]
 mayusculas_noespacio =[3,4,5,6]
+numeros_convertir = [2,8,11,13,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,
+                     40,41,43,45,46,47,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,
+                     66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,
+                     90,91,92,94,95,96,98,99,100,101,102,103,104,105,107,108,109,110,111,112,
+                     113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,
+                     132,133,134,135,136,137,138,142,143,145,147,148,149,150,151]
 
 def validarEntero(numero):
         return not isinstance(numero, float)
@@ -177,3 +186,10 @@ def ajustarfecha(fecha):
         return fecha
 
 
+########################################################################
+
+def validartipoidentitifacion(row):
+    if row[1]!='S':
+        if (row[7] =='MS' or row[7] =='AS'):
+            return False
+    return True
