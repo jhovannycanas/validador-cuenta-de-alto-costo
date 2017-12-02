@@ -197,7 +197,7 @@ class presentacion(tk.Frame):
         if self.secuencia:
             if self.datos.validarunicovalor():
                 self.cargaarchivo = True
-                self.mostrarAlertaCargaArchivo("El codigo de la APEB debe ser unico para el reporte")
+                self.mostrarAlertaCargaArchivo("El codigo de la EAPB debe ser unico para el reporte")
                 self.area.insert(tk.END,
                                  "La columna APEB presenta dos o mas codigos para el presente informe,por favor "
                                  "verificar")
@@ -411,7 +411,7 @@ class presentacion(tk.Frame):
             rutasalida = os.path.dirname(self.nombre)
             rutaexporta= os.path.join(rutasalida,nombrearchivo)
             self.datos.removerespacios_convertmayuscula()
-            self.datos.data.to_csv(rutaexporta, header=None, index=None, sep='\t', line_terminator='\r\n', mode='a')
+            self.datos.data.to_csv(rutaexporta, header=None, index=None, sep='\t', line_terminator='\r', mode='a')
             self.mostrarAviso("Se ha generado de forma exitosa el archivo de reporte")
             self.area.insert(tk.END, "El archivo resultado se encuentra ubicado en: " + rutaexporta)
             self.area.insert(tk.END, "\n")
