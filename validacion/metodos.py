@@ -18,7 +18,10 @@ dict_mensajes = {1: "El texto ingresado contiene caracteres especiales: %s en la
                  6: "El valor ingresado no corresponde a una fecha validad o una fecha admisible: %s en la columna %s en la fila %s",
                  7: "El campo no puede ser nulo o vacio: %s en la columna %s en la fila %s",
                  8:"La ubicación del nombre  de la columna: %s , no corresponde al orden esperado, "
-                   "se esperaba el siguiente nombre para la columna: %s ,en su lugar"}
+                   "se esperaba el siguiente nombre para la columna: %s ,en su lugar",
+                9:"El valor ingresado no corresponde a un tipo de documento para regimen subsidiado: %s en la columna %s en la fila %s;"
+                   "por favor verificar si el valor ingresado corresponde al esperado"}
+
 
 fechas_convertir = [9, 15, 16, 17, 18, 39, 42, 44, 49, 93, 97, 106, 141, 144,146]
 fechas_por_defecto = [16,17, 18,39,42, 44,49,93,97,106,141, 144,146]
@@ -177,3 +180,10 @@ def ajustarfecha(fecha):
         return fecha
 
 
+########################################################################
+
+def validartipoidentitifacion(row):
+    if row[1]!='S':
+        if (row[7] =='MS' or row[7] =='AS'):
+            return False
+    return True

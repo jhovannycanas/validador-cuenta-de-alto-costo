@@ -197,7 +197,7 @@ class presentacion(tk.Frame):
         if self.secuencia:
             if self.datos.validarunicovalor():
                 self.cargaarchivo = True
-                self.mostrarAlertaCargaArchivo("El codigo de la APEB debe ser unico para el reporte")
+                self.mostrarAlertaCargaArchivo("El codigo de la EAPB debe ser unico para el reporte")
                 self.area.insert(tk.END,
                                  "La columna APEB presenta dos o mas codigos para el presente informe,por favor "
                                  "verificar")
@@ -238,6 +238,7 @@ class presentacion(tk.Frame):
             self.datos.validar_Telefono()
             self.datos.validar_CodigoMunicipio()
             self.datos.validar_FechaAfiliacionEAPB()
+            self.datos.validar_tipoidentificacionregimen()
 
     def validardiagnosticotratamiento(self):
         if self.datos is not None:
@@ -427,7 +428,7 @@ class presentacion(tk.Frame):
                 savefile = savefile + ".xlsx"
             self.datos.crearexcelerrores(savefile)
             self.mostrarAviso("Se ha generado de forma exitosa el archivo de reporte de errores")
-            self.area.insert(tk.END, "Favor revisar el archivo de arrores generado en Excel")
+            self.area.insert(tk.END, "Favor revisar el archivo de errores generado en Excel")
 
 
     def mostrarAviso(self, mensaje):

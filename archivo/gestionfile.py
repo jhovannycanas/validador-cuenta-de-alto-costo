@@ -211,7 +211,7 @@ class filevalidation():
 
     def validar_CodigoMunicipio(self):
         self.dfvalidacion[self.dfvalidacion.columns[14]] = self.data[self.data.columns[14]].apply(
-            lambda x: metodos.validarValorRespuesta(x, valores.dict_mucnicipio_dos))
+            lambda x: metodos.validarValorRespuesta(str(x), valores.dict_mucnicipio_dos))
 
         self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[14],
                                  constansts.ERROR_VALORNOPERMITIDO, self.tipo)
@@ -1094,14 +1094,14 @@ class filevalidation():
     def validar_CodigoHailitacion(self):
         print(self.data[self.data.columns[139]])
         self.dfvalidacion[self.dfvalidacion.columns[139]] = self.data[self.data.columns[139]].apply(
-            lambda x: metodos.validarValorRespuesta(x, valores.dict_IPS))
+            lambda x: metodos.validarValorRespuesta(str(x), valores.dict_IPS))
 
         self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[139],
                                  constansts.ERROR_VALORNOPERMITIDO, self.tipo)
 
     def validar_CodigoMunicipio(self):
         self.dfvalidacion[self.dfvalidacion.columns[140]] = self.data[self.data.columns[140]].apply(
-            lambda x: metodos.validarValorRespuesta(x, valores.dict_mucnicipio_dos))
+            lambda x: metodos.validarValorRespuesta(str(x), valores.dict_mucnicipio_dos))
 
         self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[140],
                                  constansts.ERROR_VALORNOPERMITIDO, self.tipo)
@@ -1173,12 +1173,20 @@ class filevalidation():
         self.dfvalidacion[self.dfvalidacion.columns[150]] = self.data[self.data.columns[150]].apply(
             lambda x: metodos.validar_SindecimalesSinComas(x))
 
-        self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[19],
+        self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[150],
                                  constansts.ERROR_SOLONUMEROS, self.tipo)
 
     def validad_costoAnualIncapacidad(self):
         self.dfvalidacion[self.dfvalidacion.columns[151]] = self.data[self.data.columns[151]].apply(
             lambda x: metodos.validar_SindecimalesSinComas(x))
 
-        self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[19],
+        self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[150],
                                  constansts.ERROR_SOLONUMEROS, self.tipo)
+
+
+    def validar_tipoidentificacionregimen(self):
+        self.dfvalidacion[self.dfvalidacion.columns[7]] = self.data.apply(
+            metodos.validartipoidentitifacion,axis=1)
+
+        self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[7],
+                                 constansts.ERROR_REGIMEN_TIPOIDENTIFICACION, self.tipo)
