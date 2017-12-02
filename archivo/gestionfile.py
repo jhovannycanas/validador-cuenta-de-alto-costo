@@ -16,7 +16,7 @@ class filevalidation():
             self.data = pd.read_excel(file,dtype=object)
         if tipo == constansts.ARCHIVO_CSV:
             self.tipo = tipo
-            self.data = pd.read_csv(file,header = None,dtype=object , delimiter="\t")
+            self.data = pd.read_csv(file,header = None,dtype=object ,sep='\t')
             self.data.columns = valores.dict_columnasMalla.values()
         self._columnas = self.data.columns
         self.dfvalidacion = pd.DataFrame(columns=self._columnas)
@@ -50,6 +50,9 @@ class filevalidation():
         for fecha in metodos.fechas_convertir:
             self.data[self.data.columns[fecha]] = pd.to_datetime(self.data[self.data.columns[fecha]], yearfirst=True,format='%Y-%m-%d').dt.date
 
+    def convertirnumero(self):
+        for numero in metodos.numeros_convertir:
+            self.data[self.data.columns[numero]] = pd.to_numeric(self.data[self.data.columns[numero]])
 
     def validarLongitudColumnas(self):
         return len(self.data.columns) == constansts.NUMERO_COLUMNAS
@@ -114,6 +117,14 @@ class filevalidation():
             lambda x: metodos.validarFormatoFecha(x))
             self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[fecha],
                                      constansts.ERROR_FORMATO_FECHA, self.tipo)
+
+    def validarnumeros(self):
+        for numero in metodos.numeros_convertir:
+            self.dfvalidacion[self.dfvalidacion.columns[numero]] = self.data[self.data.columns[numero]].apply(
+            lambda x: metodos.validarSoloNumeros(x))
+            self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[numero],
+                                     constansts.ERROR_SOLONUMEROS, self.tipo)
+
 
     def validar_EPS(self):
         self.dfvalidacion[self.dfvalidacion.columns[0]] = self.data[self.data.columns[0]].apply(
