@@ -414,7 +414,7 @@ class presentacion(tk.Frame):
             rutasalida = os.path.dirname(self.nombre)
             rutaexporta= os.path.join(rutasalida,nombrearchivo)
             self.datos.removerespacios_convertmayuscula()
-            self.datos.data.to_csv(rutaexporta, header=None, index=None, sep='\t', line_terminator='\r\n', mode='a')
+            self.datos.data.to_csv(rutaexporta, header=None, index=None, sep='\t', line_terminator='\r', mode='a')
             self.mostrarAviso("Se ha generado de forma exitosa el archivo de reporte")
             self.area.insert(tk.END, "El archivo resultado se encuentra ubicado en: " + rutaexporta)
             self.area.insert(tk.END, "\n")

@@ -95,9 +95,9 @@ class filevalidation():
     def validarCaracteresEspeciales(self):
         self.dfvalidacion = self.data.applymap(lambda x: metodos.verificarSoloCaracteres(x))
         for columna in self.dfvalidacion.columns:
-            if self._columnas[12] == columna:
-                self.dfvalidacion[self.dfvalidacion.columns[12]] = True
-                continue
+            # if self._columnas[12] == columna:
+            #     self.dfvalidacion[self.dfvalidacion.columns[12]] = True
+            #     continue
             self.crearInformeErrores(self.dfvalidacion, self.data, columna,
                                      constansts.ERROR_CARACTERES_ESPECIALES, self.tipo)
 

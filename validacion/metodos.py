@@ -129,7 +129,7 @@ def validarSegundoApellido(apellido):
 def validarRangoSinDato(intervaloInferior, intervaloSuperior,sinDato, numero):
     if not validarSoloNumeros(numero):
         return False
-    if numero == sinDato == 300:
+    if numero == sinDato:
         return True
     if not validarEntero(numero):
         return False
