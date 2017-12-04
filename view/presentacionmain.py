@@ -326,7 +326,7 @@ class presentacion(tk.Frame):
             self.datos.validar_Sindrome_Sjogren_Actual()
             self.datos.validar_FechaUltimaDAS()
             self.datos.validar_Profesional_DAS_Ultimo()
-            self.datos.validar_TFGULtimo()
+            self.datos.validar_TFGULtimodos()
             self.datos.validar_Estado_AR()
             self.datos.validar_FechaUltimaHAQ()
             self.datos.validar_HAQUltimo()

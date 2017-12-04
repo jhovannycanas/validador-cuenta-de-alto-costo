@@ -790,7 +790,7 @@ class filevalidation():
         self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[94],
                                  constansts.ERROR_VALORNOPERMITIDO, self.tipo)
 
-    def validar_TFGULtimo(self):
+    def validar_TFGULtimodos(self):
         self.dfvalidacion[self.dfvalidacion.columns[95]] = self.data[self.data.columns[95]].apply(
             lambda x: metodos.validarRangoSinDato(0, 10, 300, x))
 

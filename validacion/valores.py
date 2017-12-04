@@ -27673,7 +27673,9 @@ dict_columnasMalla = {0:'1. Código de la EAPB o de la entidad territorial',
 151:'89. Costo anual de incapacidades laborales relacionadas con la AR'}
 
 
-dict_medicamentosNoPos = {11375722:'INMUNOGLOBULINA DE CONEJO ANTITIMOCITOS HUMANOS',
+dict_medicamentosNoPos = {
+    0: 'No recibe medicamentos NO POS',
+    11375722:'INMUNOGLOBULINA DE CONEJO ANTITIMOCITOS HUMANOS',
 11375711:'INMUNOGLOBULINA DE CONEJO ANTITIMOCITOS HUMANOS',
 199148094:'SIROLIMUS',
 199148093:'SIROLIMUS',
