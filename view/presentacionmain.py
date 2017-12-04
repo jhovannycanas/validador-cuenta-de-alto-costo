@@ -214,8 +214,8 @@ class presentacion(tk.Frame):
 
 
         else:
-            self.datos.ajustarfechastimestamp()
             self.datos.convertirafechas()
+            self.datos.ajustarfechastimestamp()
             self.datos.convertirnumero()
             self.btnvalidar['state'] = 'normal'
             self.mostrarAviso("El archivo se cargo exitosamente")
@@ -371,7 +371,7 @@ class presentacion(tk.Frame):
             self.datos.validar_Reemplazo_articular_4_por_AR()
             self.datos.validar_numeroHospitalizacionesAR()
             self.datos.validar_CodigoHailitacion()
-            self.datos.validar_CodigoMunicipio()
+            self.datos.validar_CodigoMunicipioips()
             self.datos.validar_fechaIngresoIPS()
             self.datos.validar_Atencion_Clinica_AR()
             self.datos.validar_Novedad_Paciente_Reporte_Anterior()

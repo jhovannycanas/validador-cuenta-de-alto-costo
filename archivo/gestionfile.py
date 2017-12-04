@@ -1110,7 +1110,7 @@ class filevalidation():
         self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[139],
                                  constansts.ERROR_VALORNOPERMITIDO, self.tipo)
 
-    def validar_CodigoMunicipio(self):
+    def validar_CodigoMunicipioips(self):
         self.dfvalidacion[self.dfvalidacion.columns[140]] = self.data[self.data.columns[140]].apply(
             lambda x: metodos.validarValorRespuesta(str(x), valores.dict_mucnicipio_dos))
 

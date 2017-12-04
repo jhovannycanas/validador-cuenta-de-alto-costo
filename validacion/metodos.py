@@ -178,7 +178,7 @@ def resaltar_error(dato):
 def ajustarfecha(fecha):
     if isinstance(fecha,datetime.date):
         if fecha.year<=1900:
-            fecha = fecha - datetime.timedelta(days=1)
+            #fecha = fecha - datetime.timedelta(days=1)
             return fecha
         else:
             return fecha
