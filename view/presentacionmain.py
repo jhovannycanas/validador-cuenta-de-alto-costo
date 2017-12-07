@@ -179,8 +179,6 @@ class presentacion(tk.Frame):
                              "El numero de columnas del archivo no es igual a lo estipulado en la resolucion, por favor"
                              "verificar las columnas del archivo")
 
-        self.datos.validarnumeros()
-        self.datos.validarfechas()
         if extension != ".txt":
             if not self.datos.validarSecuenciaColumnas():
                 self.secuencia = False
@@ -202,6 +200,9 @@ class presentacion(tk.Frame):
                 self.area.insert(tk.END,
                                  "La columna APEB presenta dos o mas codigos para el presente informe,por favor "
                                  "verificar")
+
+        self.datos.validarnumeros()
+        self.datos.validarfechas()
         if len(self.datos.errores) > 0 or self.cargaarchivo:
             self.bterrores['state'] = 'normal'
             self.mostrarAlertaCargaArchivo("El archivo que intenta validar presenta varias inconsistencias"

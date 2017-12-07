@@ -2217,7 +2217,7 @@ dict_mucnicipio_dos = {'91001':'LETICIA',
 dict_causaMuerte = {0: 'No ha fallecido', 1: 'muerte por artritis reumatoide', 2: 'muerte por otra patología',
                     3: 'muerte por causa externa'}
 
-dict_trasladoPaciente = {0: 'si se fue para el extranjero', 8: 'si está en proceso de traslado' , 999999: 'No aplica'}
+dict_trasladoPaciente = {'0': 'si se fue para el extranjero', '8': 'si está en proceso de traslado' , '999999': 'No aplica'}
 dict_trasladoPaciente =  dict(dict_trasladoPaciente.items() + dict_EAPB.items() + dict_mucnicipio_dos.items())
 
 

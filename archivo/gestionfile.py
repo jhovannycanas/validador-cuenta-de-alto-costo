@@ -7,6 +7,7 @@ from validacion import constansts
 import numpy as np
 import collections
 from openpyxl.styles import PatternFill
+import datetime
 
 class filevalidation():
     def __init__(self, file, tipo):
@@ -24,10 +25,25 @@ class filevalidation():
         self.errores = []
 
 
+    # def ajustarfechastimestamp(self):
+    #     for fecha in metodos.fechas_convertir:
+    #             self.data[self.data.columns[fecha]] = self.data[self.data.columns[fecha]].apply(
+    #                 lambda x: metodos.ajustarfecha(x))
+
     def ajustarfechastimestamp(self):
         for fecha in metodos.fechas_convertir:
-            self.data[self.data.columns[fecha]] = self.data[self.data.columns[fecha]].apply(
-                lambda x: metodos.ajustarfecha(x))
+                self.data[self.data.columns[fecha]] = self.data[self.data.columns[fecha]].apply(
+                    lambda x: self.ajustarfecha(x))
+
+    def ajustarfecha(self,fecha):
+        if isinstance(fecha, pd.Timestamp):
+            if fecha.year <= 1900:
+                fecha = fecha - datetime.timedelta(days=1)
+                return fecha
+            else:
+                return fecha
+        else:
+            return fecha
 
     def crearexcelerrores(self, archivo):
         self.writer = pd.ExcelWriter(archivo, engine='openpyxl')
@@ -122,6 +138,7 @@ class filevalidation():
         for numero in metodos.numeros_convertir:
             self.dfvalidacion[self.dfvalidacion.columns[numero]] = self.data[self.data.columns[numero]].apply(
             lambda x: metodos.validarSoloNumeros(x))
+
             self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[numero],
                                      constansts.ERROR_SOLONUMEROS, self.tipo)
 
@@ -1147,7 +1164,7 @@ class filevalidation():
 
     def validar_TrasladoPaciente(self):
         self.dfvalidacion[self.dfvalidacion.columns[145]] = self.data[self.data.columns[145]].apply(
-            lambda x: metodos.validarValorRespuesta(x, valores.dict_trasladoPaciente))
+            lambda x: metodos.validarValorRespuesta(str(x), valores.dict_trasladoPaciente))
 
         self.crearInformeErrores(self.dfvalidacion, self.data, self._columnas[145],
                                  constansts.ERROR_VALORNOPERMITIDO, self.tipo)
