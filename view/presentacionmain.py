@@ -212,6 +212,11 @@ class presentacion(tk.Frame):
                 for detalle in error:
                     self.area.insert(tk.END, "\n")
                     self.area.insert(tk.END, detalle)
+                    self.area.insert(tk.END, "\n")
+                    self.area.insert(tk.END, "Se cargaron %s registros o filas y %s columnas." % (
+                    self.datos.data.shape))
+                    self.area.insert(tk.END, "\n")
+                    self.area.insert(tk.END, "Se encontraron un total de %s columnas con errores." % (self.datos.totalcolumnaserrores()))
 
 
         else:

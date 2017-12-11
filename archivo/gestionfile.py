@@ -58,6 +58,14 @@ class filevalidation():
 
         self.writer.save()
 
+    def totalcolumnaserrores(self):
+        numeroerrores = 0
+        for columna in range(0, len(self.data.columns)):
+            for indice in range(0, len(self.data.index)):
+                if self.dfvalidacion.values[indice, columna] == False:
+                    numeroerrores = numeroerrores + 1
+                    break
+        return numeroerrores
 
     def validarunicovalor(self):
         return len(self.data[self.data.columns[0]].value_counts())>1
