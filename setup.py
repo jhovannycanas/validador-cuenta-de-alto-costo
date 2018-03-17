@@ -9,14 +9,6 @@ build_exe_options = {"includes": ["Tkinter", "pandas","openpyxl"]}
 base = None
 if sys.platform == "win32":
     base = "Win32GUI"
-#
-# executables = [
-#     Executable("/home/jhovanny/Documentos/malla_validadora/app_malla_validadora/view/presentacionmain.py",
-#                appendScriptToExe=True,
-#                )
-# ]
-
-#buildOptions = dict(create_shared_zip=False)
 
 
 includefiles = ["images"]
